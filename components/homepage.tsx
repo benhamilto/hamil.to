@@ -1,6 +1,7 @@
-import Head from "next/head";
 import React, { useContext } from "react";
 import { FileContext } from "../contexts/FileSystem";
+import { ReactTerminal } from "react-terminal";
+import { Rnd } from "react-rnd";
 
 export default function HomePage() {
   const { write, read } = useContext(FileContext);
@@ -23,48 +24,26 @@ export default function HomePage() {
         console.log(`ERR!: ${err}`);
       });
   };
+  const commands = {
+    whoami: "jackharper",
+    cd: (directory) => `changed path to ${directory}`,
+  };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-        <h1 className="text-6xl font-bold">
-          Welcome to{" "}
-          <a className="text-blue-600" href="https://nextjs.org">
-            Next.js!
-          </a>
-        </h1>
-        <div className="inline-flex space-x-1">
-          <button
-            onClick={writeFile}
-            className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
-          >
-            Write
-          </button>
-          <button
-            onClick={readFile}
-            className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
-          >
-            Read
-          </button>
-        </div>
-      </main>
-
-      <footer className="flex items-center justify-center w-full h-24 border-t">
-        <a
-          className="flex items-center justify-center"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <img src="/vercel.svg" alt="Vercel Logo" className="h-4 ml-2" />
-        </a>
-      </footer>
+    <div className="flex flex-col items-center h-screen py-2">
+      <Rnd
+        default={{
+          x: 0,
+          y: 0,
+          width: "40%",
+          height: "40%",
+        }}
+        dragHandleClassName={"index_controls__9z-dM"}
+      >
+        <ReactTerminal commands={commands}></ReactTerminal>
+      </Rnd>
+      {/* <div className="h-40v w-7/12 top-1/4 relative">
+      </div> */}
     </div>
   );
 }
